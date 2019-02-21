@@ -65,9 +65,30 @@ class splayTree {
         return root.key;
     }
 
+    Node getActualRoot(){
+        return root;
+    }
+
     void add(int value){
         array.add(value);
     }
+
+    int maxDepth(Node node){ 
+        if (node == null) 
+            return 0; 
+        else 
+        { 
+            /* compute the depth of each subtree */
+            int lDepth = maxDepth(node.left); 
+            int rDepth = maxDepth(node.right); 
+   
+            /* use the larger one */
+            if (lDepth > rDepth) 
+                return (lDepth + 1); 
+             else 
+                return (rDepth + 1); 
+        } 
+    } 
 
 	// This method mainly calls InorderRec() 
 	void inorder() { 
@@ -81,41 +102,24 @@ class splayTree {
 			System.out.println(root.key); 
 			inorderRec(root.right); 
 		} 
-	} 
+    } 
+    
+    void run(){
+        int numValue = 0;
+        for(int i = 0; i< 100 ;i++){
+            numValue = (int)(Math.random()*99) + 10;
+            insert(numValue);
+            add(numValue);
+            splay(numValue);
+            System.out.println("Max height is " + maxDepth( getActualRoot() ));
+
+
+        }
+    }
 
 	// Driver Program to test above functions 
 	public static void main(String[] args) { 
-        splayTree tree = new splayTree(); 
-
-        tree.insert(50); 
-        tree.add(50);
-
-        tree.insert(30);
-        tree.add(30);
-        tree.splay(30);
-
-        tree.insert(20);
-        tree.add(20);
-        tree.splay(20);
-        
-        tree.insert(40);
-        tree.add(40);
-        tree.splay(40);
-        
-        tree.insert(70);
-        tree.add(70);
-        tree.splay(70);
-        
-        tree.insert(60);
-        tree.add(60);
-        tree.splay(60);
-        
-        tree.insert(80);
-        tree.add(80);
-        tree.splay(80); 
-
-		// print inorder traversal of the BST 
-        tree.inorder(); 
-        System.out.println("root of tree is: " + tree.getRoot());
+        splayTree tree = new splayTree();
+        tree.run();
 	} 
 } 
